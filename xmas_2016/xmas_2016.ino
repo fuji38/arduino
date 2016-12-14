@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------
-This sketch fades LEDs up and down on digital PWM pins
-   - if USB Boarduino, select Arduino Duemilanove w/ ATmega328
-   - if Japanino, (3.3V ATmega168)
+This sketch controls WS2801 LED string
+   - if USB Boarduino, select "Arduino Duemilanove w/ ATmega328"
+   - if Japanino, select "3.3V ATmega168"
 
 2012-11-18 by Y.Fujisawa
    - initial code
@@ -14,6 +14,10 @@ This sketch fades LEDs up and down on digital PWM pins
 
 2016-12-08 by Y.Fujisawa
    - changed color pattern
+
+2016-12-14 by Y.Fujisawa
+   - changed color randomly every 1 min.
+
 
 -----------------------------------------------------------------------*/
 
@@ -61,60 +65,6 @@ const int LED_max = 25;                   // number of LEDs
 const int Bright_max = 180;               // max brightness, less than 255
 
 
-// RGB LED test at start-up
-void setup() {
-   int wait=40;
-
-   strip.begin();
-   strip.show();        // Update LED contents, to start they are all 'off'
-   color_wipe(color(150, 0, 0), wait);
-   color_wipe(color(0, 150, 0), wait);
-   color_wipe(color(0, 0, 150), wait);
-   // color_wipe(color(0, 0, 0),   wait);    // all off
-   rainbow(40);      // full color test
-}
-
-
-// procedures showing display
-void loop() {
-   int wait=40;
-   color_wipe(color(150, 130, 20), wait);    // yellow 
-   // rainbow_cycle(50);
-}
-
-
-/* skip --
-void loop_1() {
-   int wait=20;
-
-   color_wipe(color(100, 100, 0), wait);
-   delay(1000);
-   color_wipe(color(0, 100, 100), wait);
-   delay(1000);
-   color_wipe(color(100, 0, 100), wait);
-   delay(1000);
-   color_wipe(color(10, 10, 10), wait);
-   delay(1000);
-   color_wipe(color(20, 20, 20), wait);
-   delay(1000);
-   color_wipe(color(50, 50, 50), wait);
-   delay(1000);
-   color_wipe(color(100, 100, 100), wait);
-   delay(1000);
-   color_wipe(color(200, 200, 200), wait);
-   delay(1000);
-}
-
-void loop_orig() {
-  // Some example procedures showing how to display to the pixels
-  
-  color_wipe(color(255, 0, 0), 50);
-  color_wipe(color(0, 255, 0), 50);
-  color_wipe(color(0, 0, 255), 50);
-  rainbow(20);
-  rainbow_cycle(20);
-}
--- skip */
 
 void rainbow(uint8_t wait) {
    int i, j;
@@ -206,4 +156,27 @@ uint32_t color_wheel(byte wheel_pos, byte bright)
    }
 }
 
-// vim: et ts=3 sw=3 syntax=cpp
+
+// RGB LED test at start-up
+void setup() {
+   int wait=40;
+
+   strip.begin();
+   strip.show();        // Update LED contents, to start they are all 'off'
+   color_wipe(color(150, 0, 0), wait);
+   color_wipe(color(0, 150, 0), wait);
+   color_wipe(color(0, 0, 150), wait);
+   // color_wipe(color(0, 0, 0),   wait);    // all off
+   rainbow(40);      // full color test
+}
+
+
+// procedures showing display
+void loop() {
+   int wait=40;
+
+   color_wipe(color(90 + random(70), 90 + random(70), random(70)), wait);
+   delay(60 * 1000);   // wait for 1 min.
+}
+
+// vim:ts=3 sw=3 et syntax=cpp
