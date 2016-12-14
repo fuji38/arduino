@@ -16,8 +16,7 @@ This sketch controls WS2801 LED string
    - changed color pattern
 
 2016-12-14 by Y.Fujisawa
-   - changed color randomly every 1 min.
-
+   - changed color randomly every 30 sec
 
 -----------------------------------------------------------------------*/
 
@@ -176,7 +175,7 @@ void loop() {
    int wait=40;
 
    color_wipe(color(90 + random(70), 90 + random(70), random(70)), wait);
-   delay(60 * 1000);   // wait for 1 min.
+   delay(30000);   // wait for 30 sec
 }
 
 // vim:ts=3 sw=3 et syntax=cpp
